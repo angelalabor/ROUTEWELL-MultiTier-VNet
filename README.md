@@ -5,4 +5,4 @@ Multi-Tier VNet Architecture with Access Control
 
 The diagram below shows the planned Azure infrastructure for the RouteWell Multi-Tier VNet Architecture project.
 
-![RouteWell Architecture](design/architecture-diagram.png)
+![Routewell Architecture]](diagram-export-8-1-2026-11_31_13-PM.png)
