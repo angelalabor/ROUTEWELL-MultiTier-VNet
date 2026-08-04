@@ -1,47 +1,23 @@
-# RouteWell Multi-Tier VNet Architecture with Access Control
+#!/usr/bin/env bash
+set -euo pipefail
 
-## Project Overview
+RG="rg-routewell"
 
+echo "This will permanently delete resource group '$RG' and everything in it:"
+echo "  - VNet, all 3 subnets"
+echo "  - web-nsg, app-nsg, db-nsg and all their rules"
+echo "  - web-nic, app-nic, db-nic"
+echo "  - web-pip (public IP)"
+echo "  - web-vm, app-vm, db-vm and their disks"
+echo ""
+read -p "Type the resource group name to confirm: " CONFIRM
 
+if [ "$CONFIRM" != "$RG" ]; then
+  echo "Confirmation did not match. Aborting — nothing was deleted."
+  exit 1
+fi
 
-The primary objective of this project is to design and deploy a secure multi-tier virtual network in Microsoft Azure for a fictional logistics company called RouteWell. The design separates the Web, Application, and Database tiers into different subnets to improve security and control network traffic.
+echo "Deleting resource group '$RG'..."
+az group delete --name "$RG" --yes
 
-The project follows the principle of least privilege by allowing only the network traffic that is required for the application to function while blocking unnecessary communication between tiers.
-
----
-
-## Project Objectives
-
-- Design a secure Azure Virtual Network.
-- Plan subnet sizes using CIDR.
-- Create separate Web, App, and Database subnets.
-- Configure Network Security Groups (NSGs).
-- Deploy Linux Virtual Machines.
-- Test network connectivity.
-- Automate deployment using Bash scripts.
-- Document the deployment process.
-
----
-
-## Technologies Used
-
-- Microsoft Azure
-- Azure CLI
-- Azure Virtual Network (VNet)
-- Network Security Groups (NSGs)
-- Linux Virtual Machines
-- Bash
-- Git
-- GitHub
-- Visual Studio Code
-
-## Project Structure
-
-routewell-vnet-architecture/
-├── README.md
-├── design/
-├── docs/
-├── incident-report/
-├── screenshots/
-└── scripts/
-
+echo "Deletion complete."
