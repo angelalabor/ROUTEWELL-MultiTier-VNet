@@ -11,7 +11,7 @@ never be reached from anywhere except the App tier — not even from
 Web, and never from the internet.
 
 ## Architecture
-![RouteWell Architecture](diagram-export-8-1-2026-11_31_13-PM.png)
+![RouteWell Architecture](design/architecture-diagram.png)
 
 | Tier | CIDR | Public IP | Purpose |
 |---|---|---|---|
