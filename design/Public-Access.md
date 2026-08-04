@@ -24,7 +24,7 @@ The project requires only one public-facing web server, so additional services s
 
 The Application and Database tiers remain private because they do not receive Public IP addresses.
 
-Administrative access is restricted using Network Security Group rules that allow SSH only from the administrator's public IP address.
+Administrative access follows a jump-host chain: the administrator SSHes into the Web VM (the only tier with a public IP, restricted to the admin's own IP), then from Web into the App VM, then from App into the Database VM. Each hop is restricted by NSG rules to only the subnet immediately before it.
 
 This design satisfies the project's security requirements while keeping infrastructure costs low.
 

@@ -148,7 +148,8 @@ az network nsg rule create \
     --source-port-range "*" \
     --destination-port-range 8080
 
-# Allow SSH only from your admin IP
+# Allow SSH only from the Web subnet (jump host — App has no public IP,
+# so the admin's real IP can never reach it directly)
 az network nsg rule create \
     --resource-group "$RG" \
     --nsg-name app-nsg \
@@ -157,7 +158,7 @@ az network nsg rule create \
     --direction Inbound \
     --access Allow \
     --protocol Tcp \
-    --source-address-prefix "${ADMIN_IP}/32" \
+    --source-address-prefix 10.10.0.0/27 \
     --source-port-range "*" \
     --destination-port-range 22
 
@@ -173,9 +174,9 @@ az network nsg rule create \
     --source-address-prefix VirtualNetwork \
     --source-port-range "*" \
     --destination-address-prefix "*" \
-    --destination-port-range "*"  
+    --destination-port-range "*"
 
-    echo "Creating Database NSG Rules..."
+echo "Creating Database NSG Rules..."
 
 # Allow App tier to reach PostgreSQL
 az network nsg rule create \
@@ -190,7 +191,7 @@ az network nsg rule create \
     --source-port-range "*" \
     --destination-port-range 5432
 
-# Allow SSH only from your admin IP
+# Allow SSH only from the App subnet (jump host, one hop further)
 az network nsg rule create \
     --resource-group "$RG" \
     --nsg-name db-nsg \
@@ -199,7 +200,7 @@ az network nsg rule create \
     --direction Inbound \
     --access Allow \
     --protocol Tcp \
-    --source-address-prefix  10.10.1.0/26 \
+    --source-address-prefix 10.10.1.0/26 \
     --source-port-range "*" \
     --destination-port-range 22
 
@@ -294,4 +295,3 @@ echo ""
 echo "===================================="
 echo "RouteWell deployment completed!"
 echo "===================================="
-
