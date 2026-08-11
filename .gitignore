@@ -1,0 +1,23 @@
+# Environment and secret files
+.env
+.env.*
+*.env
+
+# SSH private keys
+id_rsa
+id_rsa.pem
+*.pem
+
+# Azure local configuration
+.azure/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# VS Code settings
+.vscode/
+
+# Temporary and log files
+*.tmp
+*.log
